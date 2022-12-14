@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 2.8)
+project( RealSenseWheelCalib )
+find_package( OpenCV REQUIRED )
+find_package( realsense2 REQUIRED )
+find_package( Boost REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} ${realsense2_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+add_executable( RealSenseWheelCalib main.cpp )
+target_link_libraries( RealSenseWheelCalib ${OpenCV_LIBS} ${realsense2_LIBRARY} ${Boost_LIBRARIES} )
