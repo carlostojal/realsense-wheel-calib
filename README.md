@@ -12,6 +12,8 @@ The poses are calculated by using the OpenCV library, which provides functionali
 
 The transformation between the two boards is then calculated by using the ICP algorithm, provided by the PCL library.
 
+**WARNING**: a lot of this functionality is still under development, and the code is not yet ready for production.
+
 ## Dependencies
 - OpenCV
 - PCL
@@ -29,3 +31,7 @@ On a terminal:
 On a terminal:
 - Go to the "build" directory
 - Execute the following command: ```./RealSenseWheelCalib```
+
+## Future work
+- Send the transformation matrix and a JPEG image to an Android client using an UDP socket.
+- Do the Android app.
