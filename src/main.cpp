@@ -2,17 +2,25 @@
 #include <cstdint>
 #include <librealsense2/rs.hpp>
 #include <opencv2/opencv.hpp>
-#include <boost/math/statistics/linear_regression.hpp>
-
-#define FRAMERATE 30
-#define CHESSBOARD_N_COLS 13
-#define CHESSBOARD_N_ROWS 9
+#include <realsense_wheel_calib/environ.h>
+#include <realsense_wheel_calib/RealSense.h>
+#include <pthread.h>
 
 int main() {
 
-	// frame dimensions
-	uint16_t dimensions[2] = {1280, 720};
+	RealSense *rs;
 
+	try {
+		rs = new RealSense();
+		rs->start();
+	} catch(Error e) {
+		std::cout << e.what() << std::endl;
+		return e.error;
+	}
+
+	delete rs;
+
+	/*
 	// encapsulates device and sensors
 	rs2::pipeline pipe;
 	rs2::config cfg;
@@ -61,18 +69,17 @@ int main() {
 
 		int detectionFlags = cv::CALIB_CB_ADAPTIVE_THRESH | cv::CALIB_CB_FILTER_QUADS;
 
-		// detect the chessboard corners
+		// detect the chessboard corners.
+		// TODO: replace with Charuco boards - allows for the detection of multiple
+		// boards on a single frame and each board can have an ID
 		std::vector<cv::Point2f> corners; // these are the 2D chessboard corners
-		cv::findChessboardCorners(colorFrame, cv::Size(CHESSBOARD_N_ROWS-1, CHESSBOARD_N_COLS-1), corners, detectionFlags);
+		cv::findChessboardCorners(colorFrame, cv::Size(CHARUCO_N_ROWS-1, CHARUCO_N_COLS-1), corners, detectionFlags);
 
 		// deproject the image corners to 3D space
 		// rs2_deproject_pixel_to_point(...)
 
-		// do the plane equation estimation
-		// https://www.boost.org/doc/libs/1_81_0/libs/math/doc/html/math_toolkit/linear_regression.html maybe???
-		// linear regression done on each axis individually would provide a plane equation estimation
-
-	}
+		// use ICP to estimate the transformation between the two boards
+	}*/
 
 	return 0;
 }
