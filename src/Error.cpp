@@ -18,6 +18,16 @@ std::string Error::what() {
             return "The callback function was not set";
         case ERROR_STARTING_STREAM:
             return "Error starting stream";
+        case ERROR_CREATING_THREAD:
+            return "Error creating thread";
+        case ERROR_DETACHING_THREAD:
+            return "Error detaching thread";
+        case ERROR_CANCELLING_THREAD:
+            return "Error cancelling thread";
+        case ERROR_GETTING_FRAMES:
+            return "Error getting frames";
+        case SOURCE_NOT_INITIALIZED:
+            return "Source not initialized";
         default:
             return "Unknown error";
     }

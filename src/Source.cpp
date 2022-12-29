@@ -5,9 +5,26 @@ Source::Source(enum camera_type_t type) {
 	this->setCameraType(type);
 }
 
-Source::~Source() {}
+Source::~Source() {
+	this->initialized = false;
+	this->started = false;
+}
 
-void Source::onImageCallback(void *(*callback)(void *), frame_type_t type) {
+void Source::init() {
+	this->initialized = true;
+}
+
+void Source::start() {
+	if(!this->initialized)
+		throw Error(SOURCE_NOT_INITIALIZED);
+	this->started = true;
+}
+
+void Source::stop() {
+	this->started = false;
+}
+
+void Source::onImageCallback(void (*callback)(cv::Mat frame), frame_type_t type) {
 	switch(type) {
 		case DEPTH:
 			this->depthCallback = callback;
